@@ -1,0 +1,348 @@
+
+<style> 
+ table{border-right:1px solid #EBEBEB;border-bottom:1px solid #EBEBEB} 
+  table td{border-left:1px solid #fff;border-top:1px solid #fff} 
+    table th{border-left:1px solid #fff;border-top:1px solid #fff} 
+
+</style>
+<h1 class="post__title" style="font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 4px 0px 8px; padding: 0px; line-height: 48px; font-size: 30px; color: rgb(33, 37, 41); white-space: normal; background-color: rgb(255, 255, 255);">
+    分词和词性标注
+</h1>
+<p>
+    更新时间：2020-03-10
+</p>
+<p>
+    <br/>
+</p>
+<hr/>
+<h2 style="font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; line-height: 38px; font-size: 22px; opacity: 0.85;">
+    <a href="https://ai.baidu.com/ai-doc/SPEECH/Vk38lxily#%E7%AE%80%E4%BB%8B" class="anchor" style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; color: rgb(0, 123, 255); text-decoration-line: none; float: left; padding-right: 4px; margin-left: -20px;"></a>
+</h2>
+<h2 style="font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; line-height: 38px; font-size: 22px; opacity: 0.85;">
+    <br/>
+</h2>
+<h2 style="white-space: normal; font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; line-height: 38px; font-size: 22px; opacity: 0.85;">
+    简介
+</h2>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    为⽤户提供分词和词性标注两种功能。
+</p>
+<ul class=" list-paddingleft-2" style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 5px; margin-bottom: 5px; padding: 0px 0px 0px 18px; list-style-position: outside; list-style-image: initial;">
+    <li>
+        <p>
+            接口类型：通过 REST API 的方式提供的通用的 HTTP 接口。适用于任意操作系统，任意编程语言
+        </p>
+    </li>
+    <li>
+        <p style="font-size: medium; white-space: normal;">
+            接口参数：具体详见请求说明。
+        </p>
+        <p>
+            <br/>
+        </p>
+    </li>
+</ul>
+<h2 style="white-space: normal; font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; line-height: 38px; font-size: 22px; opacity: 0.85;">
+    调用流程
+</h2>
+<ol class=" list-paddingleft-2" style="font-size: medium; white-space: normal; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-bottom: 1rem; padding: 0px 0px 0px 20px; list-style-position: outside; list-style-image: initial;">
+    <li>
+        <p>
+            通过sophia AI开放注册进行调用。
+        </p>
+    </li>
+    <li>
+        <p>
+            返回识别结果：识别结果会即刻返回，采用 JSON 格式封装，如果调用成功，识别结果放在 JSON的“data”字段中，统一采用 utf-8 方式
+        </p>
+        <p>
+            编码。具体详见返回说明。
+        </p>
+        <p>
+            <br/>
+        </p>
+    </li>
+</ol>
+<h2 style="font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; line-height: 38px; font-size: 22px; color: rgb(0, 0, 0); opacity: 0.85;">
+    <a href="https://ai.baidu.com/ai-doc/OCR/rk3h7xzck#%E8%AF%B7%E6%B1%82%E8%AF%B4%E6%98%8E" class="anchor" style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; color: rgb(0, 123, 255); text-decoration-line: none; background-color: transparent; float: left; padding-right: 4px; margin-left: -20px;"></a>请求说明
+</h2>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;">请求示例</span>
+</p>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    HTTP 方法：<code class="language-text" style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; -webkit-font-smoothing: antialiased; box-sizing: border-box; font-size: 1em; color: rgb(0, 0, 0); word-wrap: normal; border-radius: 0.3em; position: relative; padding: 0.1em; margin: 0px; background: rgb(245, 242, 240); text-shadow: rgb(255, 255, 255) 0px 1px; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none;">POST</code>
+</p>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    请求URL：&nbsp;<code class="language-text" style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; -webkit-font-smoothing: antialiased; box-sizing: border-box; font-size: 1em; color: rgb(0, 0, 0); word-wrap: normal; border-radius: 0.3em; position: relative; padding: 0.1em; margin: 0px; background: rgb(245, 242, 240); text-shadow: rgb(255, 255, 255) 0px 1px; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none;">http://106.13.122.156:8088/v1/api/zhujian/participle</code>
+</p>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <br/>
+</p>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;">请求参数</span>
+</p>
+<table>
+    <thead style="-webkit-font-smoothing: antialiased; box-sizing: border-box;">
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);" class="firstRow">
+            <th style="-webkit-font-smoothing: antialiased; box-sizing: border-box; background: rgb(251, 251, 251); color: rgb(0, 0, 0); padding: 8px; border-color: rgb(235, 235, 235);">
+                参数
+            </th>
+            <th style="-webkit-font-smoothing: antialiased; box-sizing: border-box; background: rgb(251, 251, 251); color: rgb(0, 0, 0); padding: 8px; border-color: rgb(235, 235, 235);" width="71.33333333333333">
+                是否必选
+            </th>
+            <th style="-webkit-font-smoothing: antialiased; box-sizing: border-box; background: rgb(251, 251, 251); color: rgb(0, 0, 0); padding: 8px; border-color: rgb(235, 235, 235);" width="48.33333333333333">
+                类型
+            </th>
+            <th style="-webkit-font-smoothing: antialiased; box-sizing: border-box; background: rgb(251, 251, 251); color: rgb(0, 0, 0); padding: 8px; border-color: rgb(235, 235, 235);" width="101.33333333333334">
+                可选值范围
+            </th>
+            <th style="-webkit-font-smoothing: antialiased; box-sizing: border-box; background: rgb(251, 251, 251); color: rgb(0, 0, 0); padding: 8px; border-color: rgb(235, 235, 235);" width="482.33333333333337">
+                说明
+            </th>
+        </tr>
+    </thead>
+    <tbody style="-webkit-font-smoothing: antialiased; box-sizing: border-box;">
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);">
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                queries
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235);" width="18">
+                是
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="66.33333333333333">
+                list
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235);" width="80.33333333333333">
+                -
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="461.33333333333337">
+                待分析⽂本
+            </td>
+        </tr>
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);">
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                <p>
+                    flags
+                </p>
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="18">
+                是
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="48.33333333333333">
+                string
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="80.33333333333333">
+                -
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="461.33333333333337">
+                功能模块名称：分词和词性标注
+            </td>
+        </tr>
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);">
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                locale
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="18">
+                是
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="48.33333333333333">
+                string
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="80.33333333333333">
+                -
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="461.33333333333337">
+                该参数默认可不加，默认为简体，如需要繁体，则增加此参数 zh_TW
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;"><br/></span>
+</p>
+<p style="font-size: medium; white-space: normal; margin-top: 14px; margin-bottom: 14px; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; overflow-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;">请求示例</span>
+</p>
+<pre class="language-json" style="font-size: 1em; word-spacing: normal; padding: 1em; background-color: rgb(245, 242, 240); font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; -webkit-font-smoothing: antialiased; box-sizing: border-box; overflow: auto; overflow-wrap: normal; text-shadow: rgb(255, 255, 255) 0px 1px; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none;">{“queries”:[”我喜欢电影”]
+“flags”:”segment”
+}</pre>
+<p style="font-size: medium; white-space: normal;">
+    <br/>
+</p>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;">返回说明</span>
+</p>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;"><br/></span>
+</p>
+<ol class=" list-paddingleft-2" style="list-style-type: decimal;">
+    <li>
+        <p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+            <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box; font-size: 14px;">Head 参数说明</span><span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;">：</span>
+        </p>
+    </li>
+</ol>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;"></span>
+</p>
+<table>
+    <thead style="-webkit-font-smoothing: antialiased; box-sizing: border-box;">
+        <tr class="firstRow" style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);">
+            <th style="padding: 8px; border-color: rgb(235, 235, 235); background: rgb(251, 251, 251); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                字段
+            </th>
+            <th width="51" style="padding: 8px; border-color: rgb(235, 235, 235); background: rgb(251, 251, 251); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                说明
+            </th>
+            <th width="515.3333333333334" style="padding: 8px; border-color: rgb(235, 235, 235); background: rgb(251, 251, 251); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                值／remark／消息
+            </th>
+        </tr>
+    </thead>
+    <tbody style="-webkit-font-smoothing: antialiased; box-sizing: border-box;">
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);">
+            <td style="padding: 8px; border-color: rgb(235, 235, 235); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                stateCode
+            </td>
+            <td width="95.33333333333333" style="padding: 8px; border-color: rgb(235, 235, 235); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                状态码
+            </td>
+            <td width="494.3333333333333" style="padding: 8px; border-color: rgb(235, 235, 235); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                <p>
+                    0<span style="white-space: pre;">	</span>表示成功：成功
+                </p>
+                <p>
+                    1000 在 flag 参数中有语法错误: 空 flag 或传入错误的 flag 参数
+                </p>
+                <p>
+                    1001 表示错误的命令请求格式： JSON 格式错误
+                </p>
+                <p>
+                    2000 表示请求的操作超时终止：模块处理超时
+                </p>
+                <p>
+                    2001 表示未执行请求的操作：⽂本超过指定长度（TBD）
+                </p>
+                <p>
+                    2002 表示未执行请求的操作：请求超过指定数量
+                </p>
+                <p>
+                    <br/>
+                </p>
+            </td>
+        </tr>
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);">
+            <td style="padding: 8px; border-color: rgb(235, 235, 235); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                cost
+            </td>
+            <td width="74.33333333333333" style="padding: 8px; border-color: rgb(235, 235, 235); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                使用时间
+            </td>
+            <td width="494.3333333333333" style="padding: 8px; border-color: rgb(235, 235, 235); -webkit-font-smoothing: antialiased; box-sizing: border-box; word-break: break-all;">
+                毫秒（float）
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;"></span><br/>
+</p>
+<ol class=" list-paddingleft-2" style="list-style-type: decimal;">
+    <li>
+        <p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+            <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box; font-size: 14px;">body 参数说明：</span>
+        </p>
+    </li>
+</ol>
+<p>
+    <br/>
+</p>
+<table width="-81">
+    <thead style="-webkit-font-smoothing: antialiased; box-sizing: border-box;">
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);" class="firstRow">
+            <th style="-webkit-font-smoothing: antialiased; box-sizing: border-box; background: rgb(251, 251, 251); color: rgb(0, 0, 0); padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                字段
+            </th>
+            <th style="-webkit-font-smoothing: antialiased; box-sizing: border-box; background: rgb(251, 251, 251); color: rgb(0, 0, 0); padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="34">
+                类型
+            </th>
+            <th style="-webkit-font-smoothing: antialiased; box-sizing: border-box; background: rgb(251, 251, 251); color: rgb(0, 0, 0); padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="553.3333333333334">
+                <span style="font-weight: 700; text-align: center; background-color: rgb(251, 251, 251);">说明</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody style="-webkit-font-smoothing: antialiased; box-sizing: border-box;">
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);">
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                query
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="78.33333333333333">
+                string
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="532.3333333333334">
+                待分析⽂本
+            </td>
+        </tr>
+        <tr style="-webkit-font-smoothing: antialiased; box-sizing: border-box; border: 1px solid rgb(235, 235, 235);">
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                word
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="34">
+                string
+            </td>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;" width="532.3333333333334">
+                分词结果
+            </td>
+        </tr>
+        <tr>
+            <td style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                pos
+            </td>
+            <td width="34" style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                string
+            </td>
+            <td width="532.3333333333334" style="-webkit-font-smoothing: antialiased; box-sizing: border-box; padding: 8px; border-color: rgb(235, 235, 235); word-break: break-all;">
+                当前分词结果对应的词性
+            </td>
+        </tr>
+    </tbody>
+</table>
+<p>
+    <br/>
+</p>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;">返回示例</span>
+</p>
+<pre class="language-json" style="font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; -webkit-font-smoothing: antialiased; box-sizing: border-box; font-size: 1em; overflow: auto; color: rgb(0, 0, 0); word-wrap: normal; background-color: rgb(245, 242, 240); padding: 1em; text-shadow: rgb(255, 255, 255) 0px 1px; word-spacing: normal; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none;">[
+	{
+		&quot;query&quot;: &quot;我喜欢电影&quot;,
+		&quot;nlpState&quot;: 0,
+		&quot;stateCode&quot;: 0,
+		&quot;StateDescription&quot;: &quot;success&quot;,
+		&quot;jarVersion&quot;: &quot;nlu-joint-SNAPSHOT.jar&quot;,
+		&quot;cost&quot;: 1,
+		&quot;segment&quot;: [
+			{
+				&quot;word&quot;: &quot;我&quot;,
+				&quot;pos&quot;: &quot;rr&quot;
+			},
+			{
+				&quot;word&quot;: &quot;喜欢&quot;,
+				&quot;pos&quot;: &quot;v&quot;
+			},
+			{
+				&quot;word&quot;: &quot;电影&quot;,
+				&quot;pos&quot;: &quot;n&quot;
+			}
+		]
+	}
+]</pre>
+<p>
+    <br/>
+</p>
+<h2 style="white-space: normal; font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; line-height: 38px; font-size: 22px; opacity: 0.85;">
+    示例Demo调用
+</h2>
+<p style="margin-top: 14px; margin-bottom: 14px; font-size: medium; white-space: normal; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; word-wrap: break-word;">
+    <span style="-webkit-font-smoothing: antialiased; font-weight: bolder; box-sizing: border-box;">请求示例见：&nbsp;<a href="https://github.com/Baidu-AIP/speech-demo" target="_blank" style="-webkit-font-smoothing: antialiased; font-weight: 400; box-sizing: border-box; color: rgb(0, 123, 255); text-decoration-line: none;">http://106.13.122.156:8088/swagger-ui.html#/zhu-jian-controller</a></span>
+</p>

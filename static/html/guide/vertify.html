@@ -1,0 +1,139 @@
+<h1 class="post__title" style="white-space: normal; font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 4px 0px 8px; padding: 0px; font-size: 30px; color: rgb(33, 37, 41); background-color: rgb(255, 255, 255); line-height: 1.5em;">
+    接口鉴权认证
+</h1>
+<p style="line-height: 1.5em;">
+    更新时间：2020-06-23
+</p>
+<p>
+    <br/>
+</p>
+<hr/>
+<p>
+    <br/>
+</p>
+<h2 style="font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; font-size: 22px; color: rgb(0, 0, 0); opacity: 0.85; line-height: 1.5em;">
+    <a href="https://cloud.baidu.com/doc/NLP/s/Bk6z52e59#%E9%94%99%E8%AF%AF%E4%BF%A1%E6%81%AF" class="anchor" style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; color: rgb(0, 123, 255); text-decoration-line: none; background-color: transparent; float: left; padding-right: 4px; margin-left: -20px; outline: none !important;"></a>简介
+</h2>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+    <li>
+        <p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; line-height: 1.5em;">
+            本文档主要针对需要集成HTTP API的技术研发工程师。
+        </p>
+    </li>
+    <li>
+        <p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; line-height: 1.5em;">
+            <span style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif;">Sophia平台HTTP API使用鉴权机制对每个接口请求进行权限校验，对于校验不通过的请求，API将拒绝处理，并返回鉴权失败错误。</span>
+        </p>
+    </li>
+    <li>
+        <p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; line-height: 1.5em;">
+            <span style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif;">接口调用者在调用API时,在header头中必须带上Sophia平台所分配apikey和secretKey，平台会自动进行校验，如果不匹配，直接返回false。</span><br/>
+        </p>
+    </li>
+</ul>
+<p style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; line-height: 1.5em;">
+    <br/>
+</p>
+<h2 style="white-space: normal; font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; font-size: 22px; opacity: 0.85; background-color: rgb(255, 255, 255); line-height: 1.5em;">
+    为什么要进行鉴权认证？
+</h2>
+<p>
+    <br/>
+</p>
+<p>
+    &nbsp;&nbsp;&nbsp;&nbsp;鉴权过程会通过以下方式保护您的API请求：
+</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+    <li>
+        <p style="white-space: normal; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; color: rgba(0, 0, 0, 0.85); font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.5em;">
+            <span style="font-size: 16px;"><span style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif;"><span style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif;">验证请求者的身份</span></span></span>
+        </p>
+    </li>
+</ul>
+<p style="white-space: normal; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; color: rgba(0, 0, 0, 0.85); font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.5em;">
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 16px;">鉴权可以确保请求是由某个具有有效访问密钥的用户或服务发起。</span>
+</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+    <li>
+        <p style="white-space: normal; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; color: rgba(0, 0, 0, 0.85); font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.5em;">
+            <span style="font-size: 16px;">保护传输中的数据，防止非法篡改</span>
+        </p>
+    </li>
+</ul>
+<p style="white-space: normal; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; color: rgba(0, 0, 0, 0.85); font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.5em;">
+    <span style="font-size: 16px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;若请求在传输过程中遭到非法篡改，如果第三方对<span style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif;">apikey和</span><span style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif;">secretKey进行篡改</span>，接口收到请求后认证字符串匹配将</span>
+</p>
+<p style="white-space: normal; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; color: rgba(0, 0, 0, 0.85); font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.5em;">
+    <span style="font-size: 16px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;失败，因此身份校验无法通过。</span>
+</p>
+<p style="white-space: normal; font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; margin-top: 14px; margin-bottom: 14px; overflow-wrap: break-word; color: rgba(0, 0, 0, 0.85); font-size: 14px; background-color: rgb(255, 255, 255); line-height: 1.5em;">
+    <span style="font-size: 16px;"><br/></span>
+</p>
+<h2 style="font-family: PingFangSC-Medium; -webkit-font-smoothing: antialiased; font-weight: 500; box-sizing: border-box; margin: 0px; padding: 0px; font-size: 22px; color: rgb(0, 0, 0); opacity: 0.85; line-height: 1.5em;">
+    <a href="https://cloud.baidu.com/doc/NLP/s/Bk6z52e59#%E6%89%80%E6%9C%89%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%94%99%E8%AF%AF%E7%A0%81%E8%AF%B4%E6%98%8E" class="anchor" style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro SC&quot;, &quot;SF Pro Text&quot;, &quot;Helvetica Neue&quot;, Helvetica, &quot;PingFang SC&quot;, &quot;Segoe UI&quot;, Roboto, &quot;Hiragino Sans GB&quot;, arial, &quot;microsoft yahei ui&quot;, &quot;Microsoft YaHei&quot;, SimSun, sans-serif; -webkit-font-smoothing: antialiased; box-sizing: border-box; color: rgb(0, 123, 255); text-decoration-line: none; background-color: transparent; float: left; padding-right: 4px; margin-left: -20px; outline: none !important;"></a>鉴权操作
+</h2>
+<p>
+    <br/>
+</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+    <li>
+        <p style="line-height: 2em;">
+            鉴权认证步骤：鉴权认证过程固定如下5个步骤。
+        </p>
+    </li>
+</ul>
+<p style="line-height: 2em;">
+    &nbsp;1.通过sophia后台申请分配apikey和secretKey，配置权限等。
+</p>
+<p style="line-height: 2em;">
+    <br/>
+</p>
+<p style="line-height: 2em;">
+    <img src="https://sophia-portal-files.yzsmart.top/image/image/20200623/9d0115fb698843d89a1e026b54ffea82.png" width="871" height="477"/>
+</p>
+<p style="line-height: 2em;">
+    <img src="https://sophia-portal-files.yzsmart.top/image/image/20200623/1967ba0b70bc4e47aab133dd0b0efb4e.png" width="871" height="200" title="" alt=""/>
+</p>
+<p style="line-height: 2em;">
+    <br/>
+</p>
+<p style="line-height: 2em;">
+    &nbsp; 2.使用apikey和secretKey放到header中，构造规范化的Header字符串。<br/>
+</p>
+<p style="line-height: 2em;">
+    &nbsp; #java示例：
+</p>
+<pre class="language-json" style="font-size: 1em; word-spacing: normal; font-family: Consolas, Monaco, &quot;Andale Mono&quot;, &quot;Ubuntu Mono&quot;, monospace; -webkit-font-smoothing: antialiased; box-sizing: border-box; overflow: auto; overflow-wrap: normal; background-color: rgb(245, 242, 240); padding: 1em; text-shadow: rgb(255, 255, 255) 0px 1px; word-break: normal; line-height: 1.5; tab-size: 4; hyphens: none;">public static void createHttp() {
+
+RestTemplate template = new RestTemplate();
+ClientHttpRequestFactory clientFactory = new HttpComponentsClientHttpRequestFactory();
+template.setRequestFactory(clientFactory);
+
+String urlStr = &quot;https://*******/getUsers&quot;;
+
+URI uri = UriComponentsBuilder.fromUriString(urlStr)
+//.queryParam(&quot;sid&quot;, &quot;42581a0dc0294e97ac8e3331875cfaaa&quot;)
+.build().encode().toUri();
+
+HttpHeaders requestHeaders = new HttpHeaders();
+requestHeaders.set(&quot;apikey&quot;, &quot; 86eebfae6e4eef9e22b7caa6a4b684&quot;);
+requestHeaders.set(&quot;secretKey&quot;, &quot; sadaw9e22b7caa6a4b684&quot;);
+HttpEntityrequestEntity = new HttpEntity(&quot;&quot;,requestHeaders);
+
+ResponseEntityresponseEntity = template.exchange(uri, HttpMethod.GET,
+requestEntity,String.class);
+
+System.out.println(&quot;返回信息&quot; + responseEntity.getBody());
+}</pre>
+<p style="line-height: 2em;">
+    <br/>
+</p>
+<p style="line-height: 2em;">
+    &nbsp; 3.使用http请求将url业务参数参数，以及header参数，放入进行请求即可。
+</p>
+<p style="line-height: 2em;">
+    <br/>
+</p>
+<p style="line-height: 2em;">
+    <br/>
+</p>
