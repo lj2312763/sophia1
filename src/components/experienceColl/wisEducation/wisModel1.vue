@@ -103,7 +103,6 @@
 
 <script>
 import { imgPreviewBase64, getImgSize } from "@/assets/js/imgPreviewBase64";
-import Qs from 'qs'
 
 export default {
   props: ["routeId", "title", "tableName"],
