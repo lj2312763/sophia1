@@ -9,10 +9,12 @@
       <img :src="closeIcon" class="closeIcon" @click="closeModel" />
       <div class="fn_container">
          <Table :columns="columns1" :data="data1"></Table>
-        <div class="btn">
-            <div class="btn_btn btn_sure"  @click="closeModel" >确定</div>
-            <div class="btn_btn btn_cancle"  @click="closeModel" >取消</div>
-        </div>
+        <!--如果合并数据的话，只用使用一个tabe-->
+         <Table :columns="columns2" v-show="!isMerge" :data="data2"></Table>
+        <!--<div class="btn">-->
+            <!--<div class="btn_btn btn_sure"  @click="closeModel" >确定</div>-->
+            <!--<div class="btn_btn btn_cancle"  @click="closeModel" >取消</div>-->
+        <!--</div>-->
       </div>
 
     </div>
@@ -113,52 +115,10 @@ export default {
       encoder: { oneHot: [], factorize: []},
       unitChangeParm1: {},
       unitChangeParm2: {},
-      columns1: [
-            {
-                title: '姓名',
-                key: 'name'
-            },
-            {
-                title: 'A年龄',
-                key: 'age'
-            },
-            {
-                title: '地址',
-                key: 'address'
-            }
-        ],
-      data1: [
-          {
-              name: 'John Brown1',
-              age: 18,
-              address: 'New York No. 1 Lake Park',
-              date: '2016-10-03'
-          },
-          {
-              name: 'Jim Green2',
-              age: 22,
-              address: 'London No. 1 Lake Park',
-              date: '2016-10-01'
-          },
-          {
-              name: 'Joe Black',
-              age: 30,
-              address: 'Sydney No. 1 Lake Park',
-              date: '2016-10-02'
-          },
-          {
-              name: 'Jon Snow',
-              age: 26,
-              address: 'Ottawa No. 2 Lake Park',
-              date: '2016-10-04'
-          },
-          {
-              name: 'Jon Snow2',
-              age: 26,
-              address: 'Ottawa No. 2 Lake Park',
-              date: '2016-10-04'
-          }
-      ],
+      columns1: [],
+      data1: [],
+      columns2: [],
+      data2: [],
       formParams: {
           numGtValue: '',
           numLtValue:'',
@@ -183,7 +143,8 @@ export default {
         },
       numLtValueDis:true,
       numGtValueDis:true,
-      numPlusValueDis:true
+      numPlusValueDis:true,
+      isMerge:false,
     };
   },
    created() {
@@ -222,51 +183,29 @@ export default {
         } else{
           fillUpWay = '';
         }
-        const params = {
-          tableName: this.tableName || '',
-          fieldScope: operData.choiceField || '',
-          missNumber: missNumber,
-          numberLess: numLess,
-          numberGreater: numGreater,
-          standardDev: standard,
-          dealMethod: operData.resource,
-          fillUpWay: fillUpWay,
-
+      const formData = new FormData()
+      formData.append('tableName',this.tableName || '');
+      formData.append('fieldScope',operData.choiceField || '');
+      formData.append('missNumber',missNumber);
+      formData.append('numberLess',numLess);
+      formData.append('numberGreater',numGreater);
+      formData.append('standardDev',standard);
+      formData.append('dealMethod',operData.resource);
+      formData.append('fillUpWay',fillUpWay);
+      return this.$axios({
+        headers: {
+          'Accept': '*/*',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        method: "post",
+        url: window.config.dataUrl+"/data/abnormalValue/abnormalHandle",
+        data: formData,
+      }).then((res)=>{
+        if(res.data.code === 200000){
+          return res.data.data
         }
-        console.log(params)
-        this.$axios({
-            method: "post",
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-            },
-            transformRequest: [function(data) {      //在请求之前对data传参进行格式转换
-              data = Qs.stringify(data)
-              return data
-            }],
-            url: window.config.dataUrl + "/data/abnormalValue/abnormalHandle",
-            data: params
-        }).then(res=>{
-          if(res.code == 200000){
-            this.preview=true;
-            let afterOperData = res.data;
-            this.$emit('afterOperData',afterOperData);
-          } else{
-            let errMsg = res.message;
-            this.$message({
-              type: 'error',
-              duration: '1500',
-              message: errMsg || "获取数据失败",
-              showClose: true
-            });
-          }
-        }).catch(err=>{
-          this.$message({
-            type: 'error',
-            duration: '1500',
-            message:"获取数据失败",
-            showClose: true
-          });
-        });
+        return Promise.reject()
+      })
       },
      handleClickStandType(e){
         let choiceSrr = e;
@@ -321,16 +260,62 @@ export default {
      },
     // 查看数据
     view(){
-        this.submitFunc1();
-        this.submitFunc2()
+      Promise.all([this.submitFunc1(), this.submitFunc2()]).then(([data1, data2])=>{
+        const col = data2.col
+        let detailData = data2.data
+        const list = [];
+          detailData = detailData.map(e=> {
+            let row = {}
+            e.forEach((it, i) => {
+              col[i] && (row[col[i]] = it)
+            })
+            return row
+          })
+        // 分开显示表格
+        this.separateData(data1, detailData)
+        // 合并显示表格
+        // this.mergeData(data1, detailData)
+      }).finally(()=>{
+        this.preview = true
+      })
+    },
+    // 分开表格显示
+    separateData(data1, data2){
+      this.isMerge = false
+      if(data1 && data1.length){
+        const col = data1[0]
+        this.columns1 = Object.keys(col).sort().map(e=>({ key: e, title: e }))
+        this.data1 = data1
+      }
+      if(data2 && data2.length){
+        const col = data2[0]
+        this.columns2 = Object.keys(col).sort().map(e=>({ key: e, title: e }))
+        this.data2 = data2
+      }
+    },
+    // 合并数据显示
+    mergeData(data1, data2){
+      const list = [].concat(data1, data2)
+      this.isMerge = true
+      if(!list.length){
+        return
+      }
+      const col = list[0]
+      this.columns1 = Object.keys(col).sort().map(e=>({ key: e, title: e }))
+      this.data1 = list
     },
     // 算法数据编码请求
    submitFunc2(){
-      const data = { tableId: this.tableName, encoder: this.encoder }
-     this.$axios({
+     const data = { tableId: this.tableName, encoder: this.encoder }
+     return this.$axios({
        method: "post",
        url: window.config.dataUrl + "/algorithm/dataProcess/encoder",
        data
+     }).then((res)=>{
+       if(res.data.code === '200'){
+         return res.data.res
+       }
+       return Promise.reject()
      })
    }
   },
