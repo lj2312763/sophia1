@@ -8,6 +8,7 @@
       <div class="title">处理结果</div>
       <img :src="closeIcon" class="closeIcon" @click="closeModel" />
       <div class="fn_container">
+        <AreaChart />
         <img :src="img" />
         <div class="btn">
           <div class="btn_btn btn_sure" @click="closeModel">确定</div>
@@ -19,6 +20,7 @@
 </template>
 
 <script>
+import AreaChart from "./AreaChart";
 import { imgPreviewBase64, getImgSize } from "@/assets/js/imgPreviewBase64";
 
 export default {
@@ -33,6 +35,7 @@ export default {
       selfList:[]
     };
   },
+  components: { AreaChart },
   created() {
     this.ininSearch();
   },
@@ -120,8 +123,8 @@ export default {
           }
           this.resultArr=res;
       }
-      
-      
+
+
   },
     closeModel() {
       this.$emit("closeWindow", false);
