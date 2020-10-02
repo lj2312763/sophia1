@@ -33,7 +33,10 @@
       width: {
         default: '500px'
       },
-      title: ''
+      title: '',
+      colors: {
+        default: ()=>['#d6f5e9','#d6e3fd', '#d6dbe4']
+      },
     },
     components: {
     },
@@ -77,12 +80,14 @@
 
         }
         const series = []
-        Object.keys(temp).forEach((it)=>{
+        console.log(this.colors)
+        Object.keys(temp).forEach((it, i)=>{
           series.push({
             name: it,
             type: 'line',
             stack: '总量',
             areaStyle: {},
+            color: this.colors[i],
             smooth: true,
             data: temp[it]
           })
