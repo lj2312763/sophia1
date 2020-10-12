@@ -91,7 +91,6 @@ export default {
       timer:null,
       tableName:"b151f0e1c1d94d6fb49900e4fefbc5eb", // 异常值处理 暂时写死的表，等上传第一步上传结构通了，就把该默认值去除
       // tableName:"0ba5615aadaa4a8aa5ca24af0f751d78",// 数据预处理 暂时写死的表
-      // tableName: '',
       categoryList:[],
     };
   },

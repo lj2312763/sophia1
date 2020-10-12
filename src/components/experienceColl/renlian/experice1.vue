@@ -1283,12 +1283,12 @@ export default {
           this.isloading = false;
           if (res.data.code == 200000) {//AlignmentStatus ；0：失败；1：陌生人；2：成功；
               this.showResult =true;
-            if(res.data.data.AlignmentStatus == 0){
-                this.showRes=false;
-                this.isShowVideo =true;
-                this.isShowIntro=false;
-                this.videoSrc=window.config.url+"/ai/analyze/play?fileName="+res.data.data.VideoPlayUrl;
-                this.posterSrc=window.config.iconUrl+res.data.data.VideoImageUrl;
+            if(res.data.data == null || res.data.data.AlignmentStatus == 0){
+              this.showRes=false;
+              this.isShowVideo =true;
+              this.isShowIntro=false;
+              this.videoSrc=window.config.url+"/ai/analyze/play?fileName="+ !res.data.data ? '' : res.data.data.VideoPlayUrl;
+              this.posterSrc=window.config.iconUrl+ !res.data.data ? '' : res.data.data.VideoImageUrl;
             }else{
               this.showRes=true;
               this.isShowVideo =true;

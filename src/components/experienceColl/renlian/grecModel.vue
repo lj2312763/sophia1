@@ -85,9 +85,19 @@
                           </div>
                       </div>
                       <div class="image_container">
-                          <div class="changjin_tu_container" v-if="ifshowChang">
+                          <div class="changjin_tu_container" :class="{'activeChangJin':whFlag}" v-show="ifshowChang">
                               <div class="changjingtu">
-                                    <Carousel
+                                    <div class="swiper-container">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide"  :style="{height:elHight}"  v-for="(item,index) in changjinImgArr" :key="index"><img :src="item.changjingImg" class="changjingImg" ref="changjingImg"></div>
+                                        </div>
+                                    </div>
+                                    <!-- <el-carousel :height="elHight" arrow="never" indicator-position="none" :autoplay="setting.autoplay" :interval="setting.autoplaySpeed">
+                                        <el-carousel-item v-for="(item,index) in changjinImgArr" :key="index">
+                                            <img :src="item.changjingImg" class="changjingImg" ref="changjingImg">
+                                        </el-carousel-item>
+                                    </el-carousel> -->
+                                    <!-- <Carousel
                                         v-model="value3"
                                         :autoplay="setting.autoplay"
                                         :autoplay-speed="setting.autoplaySpeed"
@@ -99,13 +109,13 @@
                                         <CarouselItem v-for="(item,index) in changjinImgArr" :key="index">
                                             <img :src="item.changjingImg" class="changjingImg">
                                         </CarouselItem>
-                                    </Carousel>
+                                    </Carousel> -->
                               </div>
                               <div class="bofang_btn_container">
                                   <img :src="bofangIcon" v-if="ifShowBofangIcon" class="bofangIcon" @click="bofangCjFn">
                               </div>
                           </div>
-                          <div class="butai_tu_container" v-if="ifShowBu">
+                          <div class="butai_tu_container" v-show="ifShowBu">
                               <img :src="butaImg" class="butaImg" @click="fadaButaiFn">
                           </div>
                       </div>
@@ -117,10 +127,11 @@
 </template>
 
 <script>
-
+import { getImgSize } from "@/assets/js/imgPreviewBase64";
 export default {
   data() {
     return {
+        whFlag:false,
         closeImg: require("../../../assets/images/insightData/dialog_button_close_normal copy.png"),
         suolueTu:require("../../../assets/images/step/ps2.png"),
         bofangIcon:require("../../../assets/images/step/play.png"),
@@ -136,7 +147,7 @@ export default {
         value3: 0,
         setting: {
             autoplay: false,
-            autoplaySpeed: 1000,
+            autoplaySpeed: 500,
             dots:false,
             radiusDot: false,
             trigger: 'click',
@@ -148,7 +159,9 @@ export default {
         ifShowBofangIcon:true,
         imgFa:'',
         ifShowMinren:false,
-        ifShowNobody:false
+        ifShowNobody:false,
+        elHight:40,
+        mySwiper:null
     };
   },
   props:['detailData'],
@@ -190,20 +203,39 @@ export default {
         };
       }
   },
-  mounted(){
-      var detailData = this.detailData;
-      if(detailData.data.Name == '陌生人'){
-        this.changeDuibi(1);
-      }
-      else{
-        this.changeDuibi(2);
-      }
-  },
+    mounted(){
+        setTimeout(()=>{
+            this.mySwiper = new Swiper ('.swiper-container', {
+                loop: false, // 循环模式选项
+                autoplay : {
+                    delay:500
+                },
+                speed:500
+            });
+            this.mySwiper.autoplay.stop();
+            // var detailData = this.detailData;
+            // if(detailData.data.Name == '陌生人'){
+            //     this.changeDuibi(1);
+            // }
+            // else{
+            //     this.changeDuibi(2);
+            // }  
+            // console.log(this.mySwiper,'aaaaaaaaaa') ;  
+        },300)
+        var detailData = this.detailData;
+        if(detailData.data.Name == '陌生人'){
+            this.changeDuibi(1);
+        }
+        else{
+            this.changeDuibi(2);
+        }  
+    },
   methods: {
       closeWindow(){
         this.$emit('closeWindow')
       },
       changeBtn(arg){
+          this.value3 = 0;
           this.currentId = arg;
           if(arg == 1){
             this.ifshowChang = true;
@@ -215,12 +247,14 @@ export default {
           }
       },
       bofangCjFn(){
-          this.setting.autoplay = true;
+        //   this.setting.autoplay = true;
           this.ifShowBofangIcon = false;
+          console.log(this.mySwiper.autoplay.start());
           setTimeout(()=>{
-            this.setting.autoplay = false;
+            // this.setting.autoplay = false;
+            this.mySwiper.autoplay.stop();
             this.ifShowBofangIcon = true;
-          },3100)
+          },3200)
       },
       fadaButaiFn(){
           let imgUrl = this.imgFa;
@@ -234,7 +268,9 @@ export default {
           this.changjinImgArr = [];
           this.ifshowChang=false;
           this.imgFa = '';
-          setTimeout(()=>{
+        //  this.mySwiper.autoplay.stop();
+        //  this.ifShowBofangIcon = true;
+         this.$nextTick(()=>{
             this.ifshowChang=true;
           if(arg == 1){
               if(this.currentId==1){
@@ -265,7 +301,19 @@ export default {
                     changjingImg:window.config.iconUrl+scenImaArr[i]
                 });
             }
-            this.changjinImgArr = scenImaArr1;   
+            this.changjinImgArr = scenImaArr1; 
+            let _this=this;  
+            getImgSize(this.changjinImgArr[scenImaArr1.length-1].changjingImg).then(res => {
+                _this.whFlag = res.flag;
+            });
+            this.$nextTick(()=>{
+                this.$refs.changjingImg[scenImaArr1.length-1].onload = function(){
+                    let changjingImgDom = _this.$refs.changjingImg[scenImaArr1.length-1].height;
+                    _this.elHight = changjingImgDom + 'px';
+                    // let elDom = document.getElementsByClassName('el-carousel__container')[0];
+                    // $("el-carousel__container")[0].css({"height":changjingImgDom + 'px' + '!important'});
+                }
+            });   
             this.butaImg = butaImg;
             this.imgFa  = this.butaImg;
           }
@@ -289,12 +337,22 @@ export default {
                     changjingImg:window.config.iconUrl+scenImaArr[j]
                 });
             }
-            this.changjinImgArr = scenImaArr1;   
+            this.changjinImgArr = scenImaArr1; 
+            let _this=this;  
+            getImgSize(this.changjinImgArr[scenImaArr1.length-1].changjingImg).then(res => {
+                _this.whFlag = res.flag;
+                console.log(_this.whFlag)
+            });
+            this.$nextTick(()=>{
+                this.$refs.changjingImg[scenImaArr1.length-1].onload = function(){
+                    let changjingImgDom = _this.$refs.changjingImg[scenImaArr1.length-1].height;
+                    _this.elHight = changjingImgDom + 'px';
+                }
+            }); 
             this.butaImg = window.config.iconUrl + detailData.data.StepImageUrl;
             this.imgFa  = this.butaImg;
           }
-          },300)
-          console.log(this.changjinImgArr,'this.changjinImgArr')
+         })
       }
   },
 };
@@ -528,11 +586,15 @@ export default {
                         justify-content: center;
                         .changjin_tu_container{
                             width: 205px;
-                            height: 362px;
+                            &.activeChangJin{
+                                width:410px;
+                            }
+                            height: 358px;
                             overflow: hidden;
                             .changjingtu{
                                 width: 100%;
-                                height: 322px;
+                                max-height: 322px;
+                                overflow: hidden;
                                 .changjingImg{
                                     width: 100%;
                                 }
@@ -541,6 +603,7 @@ export default {
                                 width: 100%;
                                 height: 40px;
                                 opacity: 0.85;
+                                margin-top:-1px;
                                 background: #121C33;
                                 display: flex;
                                 align-items: center;

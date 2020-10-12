@@ -18,11 +18,6 @@ import '../static/js/jquery.arctext.js'
 
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-
-// 使用echarts
-import echarts from 'echarts'
-Vue.prototype.$echarts = echarts
-
 Vue.use(ElementUI);
 
 // 正则匹配
@@ -42,6 +37,10 @@ import 'xe-utils'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
 Vue.use(VXETable);
+
+// import vueSwiper from 'vue-awesome-swiper'
+// import 'swiper/swiper-bundle.css'
+// Vue.use(vueSwiper)
 // axios.defaults.withCredentials=true
 //     axios.defaults.crossDomain=true
 axios.interceptors.request.use(function(config) {
