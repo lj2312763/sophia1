@@ -9,6 +9,7 @@
       <img :src="closeIcon" class="closeIcon" @click="closeModel" />
       <div class="fn_container">
         <AreaChart />
+        <ScatterChart />
         <img :src="img" />
         <div class="btn">
           <div class="btn_btn btn_sure" @click="closeModel">确定</div>
@@ -21,6 +22,7 @@
 
 <script>
 import AreaChart from "./AreaChart";
+import ScatterChart from "./ScatterChart";
 import { imgPreviewBase64, getImgSize } from "@/assets/js/imgPreviewBase64";
 
 export default {
@@ -35,7 +37,7 @@ export default {
       selfList:[]
     };
   },
-  components: { AreaChart },
+  components: { AreaChart, ScatterChart },
   created() {
     this.ininSearch();
   },

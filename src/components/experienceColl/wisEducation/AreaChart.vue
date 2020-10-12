@@ -1,15 +1,5 @@
 <template>
-  <div>
-
-    <div>
-      <div id="myChart" :style="{ height, width }"></div>
-      <p class="title">伦敦金</p>
-      <p class="percent1">{{percent1}}.00%</p>
-      <p class="percent2">{{percent2}}.00%</p>
-      <p class="time">数据更新时间：{{year}}&nbsp;{{time}}</p>
-    </div>
-
-  </div>
+  <div :id="`myChart-area-${idIndex}`" :style="{ height, width }"></div>
 </template>
 
 <script>
@@ -25,6 +15,7 @@
   //   { time: '周六', '邮件营销':  5 * 60, '联盟广告': 150, '视频广告': 100, '直接访问': 130, '搜索引擎': 180,},
   //   { time: '周日', '邮件营销':  6 * 60, '联盟广告': 150, '视频广告': 100, '直接访问': 130, '搜索引擎': 180,},
   // ]
+  let i = 0
   export default {
     props: {
       height: {
@@ -41,11 +32,9 @@
     components: {
     },
     data() {
+      ++i
       return {
-        percent1: 30,
-        percent2: 70,
-        year: "2018-10-20",
-        time: "10:05:03"
+        idIndex: i,
       };
     },
     mounted() {
@@ -93,7 +82,7 @@
           })
         })
         console.log(temp)
-        let myChart = this.$echarts.init(document.getElementById("myChart"));
+        let myChart = this.$echarts.init(document.getElementById(`myChart-area-${this.idIndex}`));
         // 绘制图表
         myChart.setOption({
           title: {
