@@ -62,7 +62,7 @@
         </div>
     </div>
   <wisEducation :routeId="routeId" :title="title" :categoryList="categoryList" v-if="isShow&&routeId==1" @closeWindow="closeWindow" @getTableName="getTableName"></wisEducation>
-  <wisEducation1 :routeId="routeId" :title="title" :tableName="tableName" v-if="isShow&&routeId==2" @closeWindow="closeWindow"></wisEducation1>
+  <wisEducation1 :routeId="routeId" :title="title" :tableName="tableName" v-if="isShow&&routeId==2" @closeWindow="closeWindow" @getTableName="getNewTableName"></wisEducation1>
   <wisEducation2 :routeId="routeId" :title="title" :tableName="tableName" v-if="isShow&&routeId==3" @closeWindow="closeWindow"></wisEducation2>
   <wisEducation3 :routeId="routeId" :title="title" v-if="isShow&&routeId==4" @closeWindow="closeWindow"></wisEducation3>
   <wisEducation4 :routeId="routeId" :title="title" v-if="isShow&&routeId==5" @closeWindow="closeWindow"></wisEducation4>
@@ -89,8 +89,8 @@ export default {
       title:'',
       routeId:'',
       timer:null,
-      tableName:"b151f0e1c1d94d6fb49900e4fefbc5eb", // 异常值处理 暂时写死的表，等上传第一步上传结构通了，就把该默认值去除
-      // tableName:"0ba5615aadaa4a8aa5ca24af0f751d78",// 数据预处理 暂时写死的表
+      tableName:"", // 异常值处理 暂时写死的表，等上传第一步上传结构通了，就把该默认值去除
+      newtableName:"", // 第二步数据预处理之后的返回的新表
       categoryList:[],
     };
   },
@@ -137,6 +137,9 @@ export default {
     getTableName(code){
       this.tableName=code;
       console.log(this.tableName)
+    },
+    getNewTableName(code){
+      this.newtableName=code;
     },
      jump1(){
        let routerUrl = this.$router.resolve({

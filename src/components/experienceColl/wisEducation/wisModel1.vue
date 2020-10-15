@@ -8,9 +8,7 @@
       <div class="title">处理结果</div>
       <img :src="closeIcon" class="closeIcon" @click="closeModel" />
       <div class="fn_container">
-         <Table :columns="columns1" :data="data1"></Table>
-        <!--如果合并数据的话，只用使用一个tabe-->
-         <Table :columns="columns2" v-show="!isMerge" :data="data2"></Table>
+         <Table :columns="columns" :data="data"></Table>
         <!--<div class="btn">-->
             <!--<div class="btn_btn btn_sure"  @click="closeModel" >确定</div>-->
             <!--<div class="btn_btn btn_cancle"  @click="closeModel" >取消</div>-->
@@ -23,8 +21,33 @@
       <img :src="closeIcon" class="closeIcon" @click="closeModel" />
       <div class="fn_container">
         <div class="form">
-            <div class="subtitle">异常值处理</div>
-            <el-form ref="dialogForm" :model="formParams" label-width="90px" size="mini" :rules="rules">
+          <div class="subtitle c-mt-40">数据预处理</div>
+          <el-form ref="dialogForm"  label-width="90px" size="mini" :rules="rules">
+            <el-form-item label="OneHot编码">
+              <el-select :multiple="true" v-model="encoder.oneHot" @change="select" placeholder="请选择" >
+                <el-option
+                  v-for="item in options"
+                  :key="item.key"
+                  :disabled="disabledOptions.includes(item.value)"
+                  :label="item.value"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="序列编码">
+              <el-select :multiple="true" v-model="encoder.factorize" @change="select" placeholder="请选择" >
+                <el-option
+                  v-for="item in options"
+                  :key="item.key"
+                  :disabled="disabledOptions.includes(item.value)"
+                  :label="item.value"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-form>
+          <div class="subtitle">异常值处理</div>
+          <el-form ref="dialogForm" :model="formParams" label-width="90px" size="mini" :rules="rules">
                 <el-form-item label="范围">
                 <el-select v-model="formParams.choiceField" placeholder="选择字段">
                     <el-option v-for="(item,index) in choiceFieldArr" :key="index" :label="item.column_name" :value="item.column_name"></el-option>
@@ -66,31 +89,6 @@
                 </el-radio-group>
                 </el-form-item>
             </el-form>
-            <div class="subtitle c-mt-40">数据预处理</div>
-            <el-form ref="dialogForm"  label-width="90px" size="mini" :rules="rules">
-                <el-form-item label="OneHot编码">
-                    <el-select :multiple="true" v-model="encoder.oneHot" placeholder="请选择" >
-                        <el-option
-                        v-for="item in options"
-                        :key="item.key"
-                        :disabled="disabledOptions.includes(item.value)"
-                        :label="item.value"
-                        :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="序列编码">
-                    <el-select :multiple="true" v-model="encoder.factorize" placeholder="请选择" >
-                        <el-option
-                        v-for="item in options"
-                        :key="item.key"
-                        :disabled="disabledOptions.includes(item.value)"
-                        :label="item.value"
-                        :value="item.value">
-                        </el-option>
-                    </el-select>
-                </el-form-item>
-            </el-form>
         </div>
         <div class="btn">
             <div class="btn_btn btn_sure"  @click="view" >确定</div>
@@ -114,10 +112,8 @@ export default {
       encoder: { oneHot: [], factorize: []},
       unitChangeParm1: {},
       unitChangeParm2: {},
-      columns1: [],
-      data1: [],
-      columns2: [],
-      data2: [],
+      columns: [],
+      data: [],
       formParams: {
           numGtValue: '',
           numLtValue:'',
@@ -144,13 +140,15 @@ export default {
       numGtValueDis:true,
       numPlusValueDis:true,
       isMerge:false,
+      NewTableId:'',
     };
   },
    created() {
     this.ininSearch();
   },
   methods: {
-    submitFunc1(){
+    // 查询异常处理
+    submitFunc1(tableName){
         var operData = this.formParams;
         var missNumber,numLess,numGreater,standard,fillUpWay;
         var standardTypeArr = operData.standardType;
@@ -183,7 +181,7 @@ export default {
           fillUpWay = '';
         }
       const formData = new FormData()
-      formData.append('tableName',this.tableName || '');
+      formData.append('tableName',tableName || '');
       formData.append('fieldScope',operData.choiceField || '');
       formData.append('missNumber',missNumber);
       formData.append('numberLess',numLess);
@@ -201,7 +199,14 @@ export default {
         data: formData,
       }).then((res)=>{
         if(res.data.code === 200000){
-          return res.data.data
+          if(typeof res.data.data === 'string'){
+            this.$Message.error(res.data.data);
+          }else {
+            return res.data.data
+          }
+
+        }else {
+          this.$Message.error('请求失败');
         }
         return Promise.reject()
       })
@@ -245,7 +250,6 @@ export default {
             this.designList = res.data.data;
             this.designList.forEach((item, index) => {
               if (item.column_name != "id") {
-                this.choiceFieldArr.push(item);
                 this.options.push({ label: item.column_name, value: item.column_name })
               }
             });
@@ -259,64 +263,53 @@ export default {
      },
     // 查看数据
     view(){
-      Promise.all([this.submitFunc1(), this.submitFunc2()]).then(([data1, data2])=>{
-        const col = data2.col
-        let detailData = data2.data
-        const list = [];
-          detailData = detailData.map(e=> {
-            let row = {}
-            e.forEach((it, i) => {
-              col[i] && (row[col[i]] = it)
-            })
-            return row
-          })
-        // 分开显示表格
-        this.separateData(data1, detailData)
-        // 合并显示表格
-        // this.mergeData(data1, detailData)
-      }).finally(()=>{
+      // 没有选择
+      if(!this.formParams.choiceField || (!this.encoder.oneHot.length && !this.encoder.factorize.length)){
+        this.$message.warning('请选择异常值处理条件或数据预处理条件');
+        return
+      }
+      if(!this.NewTableId){
+        return this.$message.error('数据预处理错误，无法进行异常处理')
+      }
+      this.submitFunc1(this.NewTableId).then((data)=>{
+        const col = data.queryList[0];
+        this.columns = Object.keys(col).sort().map(e=>({ key: e, title: e }));
+        this.data = data.queryList;
+        this.$emit('getTableName', this.NewTableId);
         this.preview = true
       })
     },
-    // 分开表格显示
-    separateData(data1, data2){
-      this.isMerge = false
-      if(data1 && data1.length){
-        const col = data1[0]
-        this.columns1 = Object.keys(col).sort().map(e=>({ key: e, title: e }))
-        this.data1 = data1
-      }
-      if(data2 && data2.length){
-        const col = data2[0]
-        this.columns2 = Object.keys(col).sort().map(e=>({ key: e, title: e }))
-        this.data2 = data2
-      }
-    },
-    // 合并数据显示
-    mergeData(data1, data2){
-      const list = [].concat(data1, data2)
-      this.isMerge = true
-      if(!list.length){
-        return
-      }
-      const col = list[0]
-      this.columns1 = Object.keys(col).sort().map(e=>({ key: e, title: e }))
-      this.data1 = list
-    },
     // 算法数据编码请求
    submitFunc2(){
-     const data = { tableId: this.tableName, encoder: this.encoder }
+     const data = { tableId: this.tableName, encoder: this.encoder };
      return this.$axios({
        method: "post",
-       url: window.config.dataUrl + "/algorithm/dataProcess/encoder",
+       url: window.config.dataUrl + "/algorithm/dataProcessDemo/encoder",
        data
      }).then((res)=>{
        if(res.data.code === '200'){
-         return res.data.res
+         return res.data
+       }else {
+         this.$Message.error('请求失败');
        }
        return Promise.reject()
      })
-   }
+   },
+    // 数据预处理的选择项选择事件
+    select(){
+      //oneHot编码和序列编码只要有一个选择时就可以请求
+      if(this.encoder.factorize.length || this.encoder.oneHot.length){
+        this.submitFunc2().then((data)=>{
+          this.NewTableId = data.NewTableId;
+          this.choiceFieldArr = [];
+          data.res.col.forEach((item) => {
+            if (item !== "id" && item) {
+              this.choiceFieldArr.push({ column_name: item });
+            }
+          });
+        })
+      }
+    }
   },
   computed: {
     // 已经被选中过的下拉，禁止再次选中
